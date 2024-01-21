@@ -1,24 +1,16 @@
-//problemRoutes.js
+// problemRoutes.js
 const express = require('express');
 const router = express.Router();
 const Problem = require('../models/problem');
 
-// Create a new problem
-router.post('/problems', async (req, res) => {
+// Get problems by type
+router.get('/problems/:problemType', async (req, res) => {
   try {
-    const { question, options, correctOption } = req.body;
-    const newProblem = new Problem({ question, options, correctOption });
-    await newProblem.save();
-    res.status(201).json(newProblem);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+    const { problemType } = req.params;
 
-// Get all problems
-router.get('/problems', async (req, res) => {
-  try {
-    const problems = await Problem.find();
+    // Fetch problems based on type from the database
+    const problems = await Problem.find({ problemType });
+
     res.json(problems);
   } catch (error) {
     res.status(500).json({ error: error.message });
