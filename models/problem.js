@@ -4,7 +4,7 @@ const problemSchema = new mongoose.Schema({
   question: { type: String, required: true },
   options: { type: [String], required: true },
   correctOption: { type: Number, required: true },
-  // Add more fields as game grows
+  problemType: { type: String, required: true}
 });
 
 const Problem = mongoose.model('Problem', problemSchema);
