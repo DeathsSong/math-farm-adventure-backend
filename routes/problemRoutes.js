@@ -3,15 +3,16 @@ const express = require('express');
 const router = express.Router();
 const Problem = require('../models/problem');
 
-// Get problems by type
-router.get('/problems/:problemType', async (req, res) => {
+// Get a random problem by type
+router.get('/problems/:problemType/random', async (req, res) => {
   try {
     const { problemType } = req.params;
 
-    // Fetch problems based on type from the database
     const problems = await Problem.find({ problemType });
+    const randomIndex = Math.floor(Math.random() * problems.length);
+    const randomProblem = problems[randomIndex];
 
-    res.json(problems);
+    res.json(randomProblem);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
