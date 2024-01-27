@@ -71,4 +71,19 @@ router.post('/chickenComplete', async (req, res) => {
   }
 });
 
+//update cropComplete to true
+router.post('/cropComplete', async (req, res) => {
+  console.log('You have reached the cropComplete route');
+
+  try {
+    await Game.findOneAndUpdate(
+      { cropComplete: true },
+    );
+    res.json({ success: true, message: 'Crop status updated successfully' });
+  } catch (error) {
+    console.error('Failed to update cropComplete:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 module.exports = router;
