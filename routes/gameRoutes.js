@@ -47,11 +47,26 @@ router.post('/barnComplete', async (req, res) => {
   try {
     await Game.findOneAndUpdate(
       { barnComplete: true },
-      // { new: true }
     );
     res.json({ success: true, message: 'Barn status updated successfully' });
   } catch (error) {
     console.error('Failed to update barnComplete:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+
+//update chickenComplete to true
+router.post('/chickenComplete', async (req, res) => {
+  console.log('You have reached the chickenComplete route');
+
+  try {
+    await Game.findOneAndUpdate(
+      { chickenComplete: true },
+    );
+    res.json({ success: true, message: 'Chicken status updated successfully' });
+  } catch (error) {
+    console.error('Failed to update chickenComplete:', error.message);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
