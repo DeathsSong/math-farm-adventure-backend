@@ -86,4 +86,19 @@ router.post('/cropComplete', async (req, res) => {
   }
 });
 
+//update penComplete to true
+router.post('/penComplete', async (req, res) => {
+  console.log('You have reached the penComplete route');
+
+  try {
+    await Game.findOneAndUpdate(
+      { penComplete: true },
+    );
+    res.json({ success: true, message: 'Pen status updated successfully' });
+  } catch (error) {
+    console.error('Failed to update penComplete:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 module.exports = router;
