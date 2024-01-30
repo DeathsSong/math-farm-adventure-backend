@@ -16,9 +16,11 @@ app.use(bodyParser.json());
 // Routes
 const gameRoutes = require('./routes/gameRoutes');
 const problemRoutes = require('./routes/problemRoutes');
+const adminRoutes = require('./routes/adminRoutes')
 
 app.use('/api', gameRoutes);
 app.use('/api', problemRoutes);
+app.use('/api', adminRoutes);
 
 //start sever
 
