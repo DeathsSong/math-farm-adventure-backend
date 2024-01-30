@@ -34,35 +34,46 @@ router.post('/admin/problems', async(req, res) => {
 
     try {
         const { question, options, correctOption, problemType } = req.body;
-    
         // Validate the required fields
         if (!question || !options || !correctOption || !problemType) {
           return res.status.json({ error: 'Missing required field' });
         }
-
-    
-    const createProblem = await Problem.create({
-        question,
-        options,
-        correctOption,
-        problemType,
+        const createProblem = await Problem.create({
+            question,
+            options,
+            correctOption,
+            problemType,
       });
-      res.json(createProblem);
+        res.json(createProblem);
     } catch (error) {
       console.error('Cannot create new problem 😢');
     }
   });
 
 
+
+
 //Update/change a problem
-router.put('/admin/problems', async (req, res) => {
+router.put('/admin/problems/:id', async (req, res) => {
 
 });
 
 
 //Delete a problem
-router.delete('/admin/problems', async (req, res) => {
-
+router.delete('/admin/problems/:id', async (req, res) => {
+    console.log('You have reached the admin DELETE route');
+    console.log(req.body);
+    try {
+        const {id} = req.params;
+        const deleteProblem = await Problem.findByIdAndDelete(id);
+            if (!deleteProblem) {
+            return res.status.json('Issue deleting problem');
+            }
+            res.json(deleteProblem);
+            console.log(`${id} has been deleted`);
+    } catch (error) {
+        console.error('Cannot delete problem 😢');
+    }
 });
 
 module.exports = router;
