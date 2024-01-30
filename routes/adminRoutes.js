@@ -55,7 +55,28 @@ router.post('/admin/problems', async(req, res) => {
 
 //Update/change a problem
 router.put('/admin/problems/:id', async (req, res) => {
-
+    console.log('You have reached the PUT route');
+    console.log(req.body);
+    try {
+        const {id} = req.params;
+        const { question, options, correctOption, problemType } = req.body;
+        // Validate the required fields
+        if (!question || !options || !correctOption || !problemType) {
+            return res.status.json({ error: 'Missing required field' });
+        }
+        const updateProblem = await Problem.findByIdAndUpdate(
+            id,
+            { question, options, correctOption, problemType },
+            { new: true }
+        );
+        if (!updateProblem) {
+            return res.status.json({ error: 'Problem not found' });
+        }
+        console.log(`${id} has been updated`);
+        res.json(updateProblem);
+    } catch (error) {
+        console.error('Cannot update problem 😢');
+    }
 });
 
 
